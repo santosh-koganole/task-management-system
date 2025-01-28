@@ -6,7 +6,7 @@ import Button from "../components/Button";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 function Login() {
-  const user = useSelector((state: RootState) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
   const {
     register,
     handleSubmit,
