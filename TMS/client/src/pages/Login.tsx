@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Textbox from "../components/Textbox";
 import Button from "../components/Button";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 function Login() {
-  const user = "";
+  const user = useSelector((state: RootState) => state.auth);
   const {
     register,
     handleSubmit,
@@ -19,6 +21,7 @@ function Login() {
   const submitHandler = async (data: any) => {
     console.log(data);
   };
+
   return (
     <div className="w-full min-h-screen flex itmes-center justify-center flex-col lg:flex-row bg-[#f3f4f6]">
       <div className="w-full md:w-auto flex gap-0 md-gap-40 flex-col md:flex-row items-center justify-center">
@@ -45,7 +48,7 @@ function Login() {
                 Welcome back!
               </p>
               <p className="text-center text-base text-gray-700 ">
-                Keep all your credential safge.
+                Keep all your credential safe.
               </p>
             </div>
 

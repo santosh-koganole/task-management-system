@@ -6,9 +6,11 @@ import Trash from "./pages/Trash";
 import TaskDetail from "./pages/TaskDetail";
 import { Toaster } from "sonner";
 import Login from "./pages/Login";
+import { RootState } from "./redux/store";
+import { useSelector } from "react-redux";
 
 function Layout() {
-  const user = ""; // Replace this with actual authentication logic
+  const user = useSelector((state: RootState) => state.auth);
   const location = useLocation();
   return user ? (
     <div className="w-full h-screen flex flex-col md:flex-row">
