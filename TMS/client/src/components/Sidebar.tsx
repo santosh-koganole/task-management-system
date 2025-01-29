@@ -91,12 +91,12 @@ const Sidebar = () => {
         ))}
       </div>
 
-      <div>
+      {/* <div>
         <button className="w-full flex gap-2 p-2 items-center text-lg text-gray-800 dark:text-white">
           <MdSettings />
           <span>Settings</span>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
