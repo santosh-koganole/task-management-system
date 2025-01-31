@@ -27,10 +27,10 @@ const Navbar = () => {
             className="flex-1 outline-none bg-transparent placeholder:text-gray-500 text-gray-800"
           />
         </div>
-        <div className="flex gap-2 items-center">
-          {/* Notification panel */}
-          <UserAvatar />
-        </div>
+      </div>{" "}
+      <div className="justify-end items-center">
+        {/* Notification panel */}
+        <UserAvatar />
       </div>
     </div>
   );
