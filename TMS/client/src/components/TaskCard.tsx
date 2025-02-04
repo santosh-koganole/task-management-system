@@ -58,42 +58,27 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
             />
             <h4 className="line-clamp-1 text-black">{task?.title}</h4>
           </div>
-          <span className="text-sm text-gray-600">
-            {formatDate(new Date(task?.date))}
-          </span>
-        </>
-
-        <div className="w-full border-t border-gray-200 my-2" />
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-3">
-            <div className="flex gap-1 items-center text-sm text-gray-600">
-              <BiMessageAltDetail />
-              <span>{task?.activities?.length}</span>
-            </div>
-            <div className="flex gap-1 items-center text-sm text-gray-600 ">
-              <MdAttachFile />
-              <span>{task?.assets?.length}</span>
-            </div>
-            <div className="flex gap-1 items-center text-sm text-gray-600 ">
-              <FaList />
-              <span>0/{task?.subTasks?.length}</span>
-            </div>
-          </div>
-
-          <div className="flex flex-row-reverse">
-            {task?.team?.map((m, index) => (
-              <div
-                key={index}
-                className={clsx(
-                  "w-7 h-7 rounded-full text-white flex items-center justify-center text-sm -mr-1",
-                  BGS[index % BGS?.length]
-                )}
-              >
-                <UserInfo user={m} />
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm text-gray-600">
+              {formatDate(new Date(task?.date))}
+            </span>
+            <span>
+              <div className="flex flex-row-reverse">
+                {task?.team?.map((m, index) => (
+                  <div
+                    key={index}
+                    className={clsx(
+                      "w-7 h-7 rounded-full text-white flex items-center justify-center text-sm -mr-1",
+                      BGS[index % BGS?.length]
+                    )}
+                  >
+                    <UserInfo user={m} />
+                  </div>
+                ))}
               </div>
-            ))}
+            </span>
           </div>
-        </div>
+        </>
 
         {/* sub tasks */}
         {task?.subTasks?.length > 0 ? (
@@ -113,7 +98,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
           </div>
         ) : (
           <>
-            <div className="py-4 border-t border-gray-200">
+            <div className="py-3 border-t border-gray-200">
               <span className="text-gray-500">No Sub Task</span>
             </div>
           </>

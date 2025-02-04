@@ -7,7 +7,6 @@ export const summary = {
       date: "2025-01-15T00:00:00.000Z",
       priority: "high",
       stage: "todo",
-      assets: [],
       team: [
         {
           _id: "xyz001",
@@ -51,7 +50,6 @@ export const summary = {
       date: "2025-01-09T00:00:00.000Z",
       priority: "medium",
       stage: "in_progress",
-      assets: [],
       team: [
         {
           _id: "xyz004",
@@ -110,7 +108,6 @@ export const summary = {
       date: "2025-01-07T00:00:00.000Z",
       priority: "high",
       stage: "todo",
-      assets: [],
       team: [
         {
           _id: "65c202d4aa62f32ffd1303cc",
@@ -189,7 +186,6 @@ export const summary = {
       date: "2025-01-11T00:00:00.000Z",
       priority: "medium",
       stage: "completed",
-      assets: [],
       team: [
         {
           _id: "xyz004",
@@ -234,7 +230,6 @@ export const summary = {
       date: "2025-01-07T00:00:00.000Z",
       priority: "high",
       stage: "todo",
-      assets: [],
       team: [
         {
           _id: "65c202d4aa62f32ffd1303cc",
@@ -286,7 +281,6 @@ export const summary = {
       date: "2025-01-07T17:55:13.218Z",
       priority: "high",
       stage: "todo",
-      assets: [],
       team: [
         {
           _id: "65c202d4aa62f32ffd1303cc",
@@ -336,7 +330,6 @@ export const summary = {
       date: "2025-01-07T17:55:13.218Z",
       priority: "medium",
       stage: "in_progress",
-      assets: [],
       team: [
         {
           _id: "65c317360fd860f958baa08e",
@@ -373,7 +366,6 @@ export const summary = {
       date: "2025-01-07T17:46:56.040Z",
       priority: "low",
       stage: "todo",
-      assets: [],
       team: [
         {
           _id: "65c202d4aa62f32ffd1303cc",
@@ -423,7 +415,6 @@ export const summary = {
       date: "2025-01-05T00:00:00.000Z",
       priority: "medium",
       stage: "in_progress",
-      assets: [],
       team: [
         {
           _id: "65c317360fd860f958baa08e",
@@ -460,7 +451,6 @@ export const summary = {
       date: "2025-01-07T00:00:00.000Z",
       priority: "high",
       stage: "todo",
-      assets: [],
       team: [
         {
           _id: "65c202d4aa62f32ffd1303cc",
@@ -580,7 +570,6 @@ export const tasks = [
     date: "2025-01-09T00:00:00.000Z",
     priority: "high",
     stage: "todo",
-    assets: [],
     team: [
       {
         _id: "65c202d4aa62f32ffd1303cc",
@@ -621,7 +610,6 @@ export const tasks = [
     date: "2025-01-09T00:00:00.000Z",
     priority: "medium",
     stage: "in_progress",
-    assets: [],
     team: [
       {
         _id: "xyz004",
@@ -680,7 +668,6 @@ export const tasks = [
     date: "2025-01-07T00:00:00.000Z",
     priority: "high",
     stage: "todo",
-    assets: [],
     team: [
       {
         _id: "65c202d4aa62f32ffd1303cc",
@@ -756,7 +743,6 @@ export const tasks = [
     date: "2025-01-11T00:00:00.000Z",
     priority: "low",
     stage: "completed",
-    assets: [],
     team: [
       {
         _id: "65c317360fd860f958baa08e",
