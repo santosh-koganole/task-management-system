@@ -1,16 +1,16 @@
 import React from "react";
-
-interface TextboxProps {
+import { UseFormRegisterReturn } from "react-hook-form";
+interface ITextboxProps {
   placeholder?: string;
   type?: string;
   name: string;
   label?: string;
   className?: string;
-  register?: any;
-  error?: any;
+  register?: UseFormRegisterReturn<string>;
+  error?: string | undefined;
 }
 
-const Textbox = React.forwardRef<HTMLInputElement, TextboxProps>(
+const Textbox = React.forwardRef<HTMLInputElement, ITextboxProps>(
   ({ placeholder, type, name, label, className, register, error }, ref) => {
     return (
       <div className="w-full flex flex-col gap-1">

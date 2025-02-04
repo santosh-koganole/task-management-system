@@ -11,14 +11,15 @@ function Login() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<{ email: string; password: string }>();
 
   const navigate = useNavigate();
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     user && navigate("/dashboard");
   }, [user]);
 
-  const submitHandler = async (data: any) => {
+  const submitHandler = async (data: unknown) => {
     console.log(data);
   };
 
@@ -62,7 +63,7 @@ function Login() {
                 register={register("email", {
                   required: "Email Address is required!",
                 })}
-                error={errors.email ? errors.email.message : ""}
+                error={errors.email?.message}
               />
               <Textbox
                 placeholder="your password"

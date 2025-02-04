@@ -1,12 +1,10 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { useDispatch } from "react-redux";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { setOpenSidebar } from "../redux/slices/authSlice";
 import { MdOutlineSearch } from "react-icons/md";
 import UserAvatar from "./UserAvatar";
 
 const Navbar = () => {
-  const { user } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   return (
     <div className="flex justify-between items-center bg-white px-4 py-3 2xl:py-4 sticky z-10 top-0">

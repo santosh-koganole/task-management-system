@@ -1,9 +1,10 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 
 interface ButtonProps {
   className?: string; // Optional CSS classes
-  label: string; // Required button label
+  label?: string; // Required button label
   type?: "button" | "submit" | "reset"; // Valid button types
+  icon?: ReactNode;
   onClick?: () => void; // Optional click handler
 }
 
@@ -11,6 +12,7 @@ const Button: FC<ButtonProps> = ({
   className = "",
   label,
   type = "button",
+  icon,
   onClick = () => {},
 }) => {
   return (
@@ -20,6 +22,7 @@ const Button: FC<ButtonProps> = ({
       onClick={onClick}
     >
       <span>{label}</span>
+      {icon && icon}
     </button>
   );
 };

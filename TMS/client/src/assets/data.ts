@@ -50,7 +50,7 @@ export const summary = {
       title: "Duplicate - Duplicate - Review Code Changes",
       date: "2025-01-09T00:00:00.000Z",
       priority: "medium",
-      stage: "in-progress",
+      stage: "in_progress",
       assets: [],
       team: [
         {
@@ -144,7 +144,7 @@ export const summary = {
           _id: "65c5188be1585cfa650b79c4",
         },
         {
-          type: "in-progress",
+          type: "in_progress",
           activity: "Project is progress. Hiope to fin=ish soon!!",
           date: "2025-01-08T17:55:34.353Z",
           by: "65c202d4aa62f32ffd1303cc",
@@ -335,7 +335,7 @@ export const summary = {
       title: "Duplicate - Review Code Changes",
       date: "2025-01-07T17:55:13.218Z",
       priority: "medium",
-      stage: "in-progress",
+      stage: "in_progress",
       assets: [],
       team: [
         {
@@ -371,7 +371,7 @@ export const summary = {
       _id: "65c3c21f55ae9b2f7666e86c",
       title: "Duplicate - Website Project Proposal",
       date: "2025-01-07T17:46:56.040Z",
-      priority: "normal",
+      priority: "low",
       stage: "todo",
       assets: [],
       team: [
@@ -422,7 +422,7 @@ export const summary = {
       title: "Review Code Changes",
       date: "2025-01-05T00:00:00.000Z",
       priority: "medium",
-      stage: "in-progress",
+      stage: "in_progress",
       assets: [],
       team: [
         {
@@ -620,7 +620,7 @@ export const tasks = [
     title: "Duplicate - Duplicate - Review Code Changes",
     date: "2025-01-09T00:00:00.000Z",
     priority: "medium",
-    stage: "in-progress",
+    stage: "in_progress",
     assets: [],
     team: [
       {
@@ -711,7 +711,7 @@ export const tasks = [
         _id: "65c5188be1585cfa650b79c4",
       },
       {
-        type: "in-progress",
+        type: "in_progress",
         activity: "Project is progress. Hiope to finish soon!!",
         date: "2025-01-08T17:55:34.353Z",
         by: "65c202d4aa62f32ffd1303cc",
@@ -754,7 +754,7 @@ export const tasks = [
     _id: "65c45fb6af6ec0118be94052",
     title: "Task Manager app devlopemnt",
     date: "2025-01-11T00:00:00.000Z",
-    priority: "medium",
+    priority: "low",
     stage: "completed",
     assets: [],
     team: [
