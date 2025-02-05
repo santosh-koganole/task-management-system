@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { useState } from "react";
 import {
-  MdAttachFile,
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
@@ -9,8 +8,6 @@ import {
 import { useSelector } from "react-redux";
 import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate } from "../utils";
 import TaskDialog from "./task/TaskDialog";
-import { BiMessageAltDetail } from "react-icons/bi";
-import { FaList } from "react-icons/fa";
 import UserInfo from "./UserInfo";
 import { IoMdAdd } from "react-icons/io";
 // import AddSubTask from "./task/AddSubTask";
@@ -36,7 +33,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
 
   return (
     <>
-      <div className="w-full h-fit bg-white shadow-md p-4 rounded">
+      <div className="relative overflow-visible w-full h-fit bg-white shadow-md p-4 rounded">
         <div className="w-full flex justify-between">
           <div
             className={clsx(
@@ -56,14 +53,16 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
             <div
               className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.stage])}
             />
-            <h4 className="line-clamp-1 text-black">{task?.title}</h4>
+            <h4 className="line-clamp-1 text-black" title={task?.title}>
+              {task?.title}
+            </h4>
           </div>
           <div className="flex justify-between items-center mb-2">
             <span className="text-sm text-gray-600">
               {formatDate(new Date(task?.date))}
             </span>
             <span>
-              <div className="flex flex-row-reverse">
+              <div className="flex flex-row-reverse ">
                 {task?.team?.map((m, index) => (
                   <div
                     key={index}

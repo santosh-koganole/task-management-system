@@ -1,6 +1,4 @@
-import { BiMessageAltDetail } from "react-icons/bi";
 import {
-  MdAttachFile,
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
@@ -8,7 +6,6 @@ import {
 // import { toast } from "sonner";
 import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate } from "../../utils";
 import clsx from "clsx";
-import { FaList } from "react-icons/fa";
 import UserInfo from "../UserInfo";
 import Button from "../Button";
 import { ITask, ITeamMember } from "../../Interfaces";
@@ -114,7 +111,7 @@ const Table: React.FC<ITableProps> = ({ tasks }) => {
   return (
     <>
       <div className="bg-white  px-2 md:px-4 pt-4 pb-9 shadow-md rounded">
-        <div className="overflow-x-auto">
+        <div className="overflow-visible relative" >
           <table className="w-full ">
             <TableHeader />
             <tbody>
