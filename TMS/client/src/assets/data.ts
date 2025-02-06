@@ -499,6 +499,14 @@ export const summary = {
   ],
   users: [
     {
+      _id: "65c202d4aa62f32ffd1303cc",
+      name: "Santosh Koganole",
+      title: "Administrator",
+      role: "Admin",
+      createdAt: "2025-01-06T09:58:44.794Z",
+      isActive: true,
+    },
+    {
       _id: "65c5f27fb5204a81bde86833",
       name: "Roshan",
       title: "UX Designer",
@@ -529,14 +537,6 @@ export const summary = {
       role: "Manager",
       isActive: true,
       createdAt: "2025-01-07T04:48:22.519Z",
-    },
-    {
-      _id: "65c202d4aa62f32ffd1303cc",
-      name: "Santosh Koganole",
-      title: "Administrator",
-      role: "Admin",
-      createdAt: "2025-01-06T09:58:44.794Z",
-      isActive: true,
     },
   ],
   tasks: {

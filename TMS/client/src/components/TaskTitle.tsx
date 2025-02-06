@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { IoMdAdd } from "react-icons/io";
+// import { IoMdAdd } from "react-icons/io";
 
 interface ITaskTitleProps {
   label: string;
@@ -13,9 +13,9 @@ const TaskTitle: React.FC<ITaskTitleProps> = ({ label, className }) => {
         <p className="text-sm md:text-base text-gray-600">{label}</p>
       </div>
 
-      <button className="hidden md:block">
+      {/* <button className="hidden md:block">
         <IoMdAdd className="text-lg text-black" />
-      </button>
+      </button> */}
     </div>
   );
 };

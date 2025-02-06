@@ -3,7 +3,9 @@ export interface ITeamMember {
   name: string;
   title: string;
   role?: string;
-  email: string;
+  email?: string;
+  isActive?: boolean;
+  createdAt?: string;
 }
 
 export interface ISubTask {
@@ -43,11 +45,11 @@ export interface ITask {
 }
 
 export interface IUser {
-  email: string;
   _id: string;
   name: string;
   title: string;
   role: string;
+  email?: string;
   isActive: boolean;
   createdAt: string;
 }
