@@ -2,6 +2,7 @@ export interface ITeamMember {
   _id: string;
   name: string;
   title: string;
+  role?: string;
   email: string;
 }
 
@@ -12,16 +13,29 @@ export interface ISubTask {
   tag: string;
 }
 
+export interface IActivity {
+  type:
+    | "commented"
+    | "started"
+    | "assigned"
+    | "bug"
+    | "completed"
+    | "in_progress";
+  activity: string;
+  date: string;
+  by: string;
+  _id: string;
+}
+
 export interface ITask {
   _id: string;
   title: string;
   date: string;
   priority: "high" | "medium" | "low";
   stage: "todo" | "in_progress" | "completed";
-  assets: []; // Define a specific type if you know it
   team: ITeamMember[];
   isTrashed: boolean;
-  activities: []; // Define a specific type if you know it
+  activities: IActivity[]; // Define a specific type if you know it
   subTasks: ISubTask[];
   createdAt: string;
   updatedAt: string;

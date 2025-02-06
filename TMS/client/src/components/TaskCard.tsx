@@ -86,7 +86,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
               {task?.subTasks[0].title}
             </h5>
 
-            <div className="p-4 space-x-8">
+            <div className="py-4 space-x-8">
               <span className="text-sm text-gray-600">
                 {formatDate(new Date(task?.subTasks[0]?.date))}
               </span>

@@ -24,9 +24,9 @@ const linkData = [
     icon: <FaTasks />,
   },
   {
-    label: "Completed",
-    link: "completed/completed",
-    icon: <MdTaskAlt />,
+    label: "To Do",
+    link: "todo/todo",
+    icon: <MdOutlinePendingActions />,
   },
   {
     label: "In Progress",
@@ -34,9 +34,9 @@ const linkData = [
     icon: <MdOutlinePendingActions />,
   },
   {
-    label: "To Do",
-    link: "todo/todo",
-    icon: <MdOutlinePendingActions />,
+    label: "Completed",
+    link: "completed/completed",
+    icon: <MdTaskAlt />,
   },
   {
     label: "Team",
@@ -62,7 +62,7 @@ const Sidebar = () => {
     dispatch(setOpenSidebar(false));
   };
 
-  const NavLink = ({ el }: any) => {
+  const NavLink = ({ el }) => {
     return (
       <Link
         to={el.link}

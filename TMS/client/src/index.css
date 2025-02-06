@@ -1,7 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply font-sans; /* Tailwind utility for applying the font */
+  font-style: normal;
+  font-weight: 300;
+}
 .dots-container {
   display: flex;
   align-items: center;

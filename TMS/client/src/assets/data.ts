@@ -1,3 +1,5 @@
+import { ITask } from "../Interfaces";
+
 export const summary = {
   totalTasks: 10,
   last10Task: [
@@ -34,7 +36,7 @@ export const summary = {
       activities: [],
       subTasks: [
         {
-          title: "Task manager app devlopement",
+          title: "Requirement gathering",
           date: "2025-01-09T00:00:00.000Z",
           tag: "assignment",
           _id: "st001",
@@ -46,7 +48,7 @@ export const summary = {
     },
     {
       _id: "abc002",
-      title: "Duplicate - Duplicate - Review Code Changes",
+      title: "Review Requirement gathering",
       date: "2025-01-09T00:00:00.000Z",
       priority: "medium",
       stage: "in_progress",
@@ -135,21 +137,21 @@ export const summary = {
       activities: [
         {
           type: "assigned",
-          activity: "Test activity. Let's go!!!",
+          activity: "Visuals are ready!",
           date: "2025-01-08T17:55:34.353Z",
           by: "65c202d4aa62f32ffd1303cc",
           _id: "65c5188be1585cfa650b79c4",
         },
         {
           type: "in_progress",
-          activity: "Project is progress. Hiope to fin=ish soon!!",
+          activity: "Project is in progress. Hope to finish soon!!",
           date: "2025-01-08T17:55:34.353Z",
           by: "65c202d4aa62f32ffd1303cc",
           _id: "65c518dce1585cfa650b79da",
         },
         {
           type: "bug",
-          activity: "Bug found in the code. Kindly check and fixed ASAP!!!",
+          activity: "Bug found in the code. Kindly check and fix it ASAP!!!",
           date: "2025-01-08T18:13:14.717Z",
           by: "65c202d4aa62f32ffd1303cc",
           _id: "65c51a5e8064df97d208b392",
@@ -563,10 +565,10 @@ export const chartData = [
   },
 ];
 
-export const tasks = [
+export const tasks: ITask[] = [
   {
     _id: "65c5f12ab5204a81bde866a9",
-    title: "Test task",
+    title: "Task manager Desktop app development",
     date: "2025-01-09T00:00:00.000Z",
     priority: "high",
     stage: "todo",
@@ -594,7 +596,7 @@ export const tasks = [
     activities: [],
     subTasks: [
       {
-        title: "Task manager app development",
+        title: "Do Project setup",
         date: "2025-01-09T00:00:00.000Z",
         tag: "development",
         _id: "65c5f153b5204a81bde866c8",
@@ -606,7 +608,7 @@ export const tasks = [
   },
   {
     _id: "65c5d547660756f6fd453a7a",
-    title: "Duplicate - Duplicate - Review Code Changes",
+    title: "Blog App Admin Dashboard",
     date: "2025-01-09T00:00:00.000Z",
     priority: "medium",
     stage: "in_progress",
@@ -652,9 +654,9 @@ export const tasks = [
     ],
     subTasks: [
       {
-        title: "Blog App Admin Dashboard",
+        title: " Review Code Changes",
         date: "2025-01-08T00:00:00.000Z",
-        tag: "Website App",
+        tag: "Review",
         _id: "65c3535476ed5c48f9440973",
       },
     ],
@@ -664,7 +666,7 @@ export const tasks = [
   },
   {
     _id: "65c46026af6ec0118be9407a",
-    title: "Website Project Proposal Review",
+    title: "Blog App Dashboard",
     date: "2025-01-07T00:00:00.000Z",
     priority: "high",
     stage: "todo",
@@ -692,42 +694,56 @@ export const tasks = [
     activities: [
       {
         type: "assigned",
-        activity: "Test activity. Let's go!!!",
+        activity: "Visuals are ready!!!",
         date: "2025-01-08T17:55:34.353Z",
-        by: "65c202d4aa62f32ffd1303cc",
+        by: "Roshan",
+        _id: "65c5188be1585cfa650b79c4",
+      },
+      {
+        type: "started",
+        activity: "Development started!!!",
+        date: "2025-01-08T17:55:34.353Z",
+        by: "Santosh",
         _id: "65c5188be1585cfa650b79c4",
       },
       {
         type: "in_progress",
-        activity: "Project is progress. Hiope to finish soon!!",
+        activity: "Project is in progress. Hope to finish soon!!",
         date: "2025-01-08T17:55:34.353Z",
-        by: "65c202d4aa62f32ffd1303cc",
+        by: "Jagdev",
         _id: "65c518dce1585cfa650b79da",
       },
       {
         type: "bug",
-        activity: "Bug found in the code. Kindly check and fixed ASAP!!!",
+        activity: "Bug found in the code. Kindly check and fix it ASAP!!!",
         date: "2025-01-08T18:13:14.717Z",
-        by: "65c202d4aa62f32ffd1303cc",
+        by: "Deepak",
         _id: "65c51a5e8064df97d208b392",
       },
       {
         type: "commented",
-        activity: "Nice work. Let's finished hard!!!",
+        activity: "Nice work. Let's finish it hard!!!",
         date: "2025-01-08T18:13:14.717Z",
-        by: "65c202d4aa62f32ffd1303cc",
+        by: "Bhaskar",
+        _id: "65c51af08064df97d208b3b0",
+      },
+      {
+        type: "completed",
+        activity: "Go live!",
+        date: "2025-01-08T18:13:14.717Z",
+        by: "Bhaskar",
         _id: "65c51af08064df97d208b3b0",
       },
     ],
     subTasks: [
       {
-        title: "Blog App Dashboard",
+        title: "Project Proposal Review",
         date: "2025-01-06T00:00:00.000Z",
         tag: "Design",
         _id: "65c352e776ed5c48f944095c",
       },
       {
-        title: "Blog App Admin Dashboard",
+        title: "White board session",
         date: "2025-01-07T00:00:00.000Z",
         tag: "Design",
         _id: "65c3531476ed5c48f9440965",
@@ -739,7 +755,7 @@ export const tasks = [
   },
   {
     _id: "65c45fb6af6ec0118be94052",
-    title: "Task Manager app devlopemnt",
+    title: "Task manager mobile app devlopemnt",
     date: "2025-01-11T00:00:00.000Z",
     priority: "low",
     stage: "completed",
@@ -761,31 +777,31 @@ export const tasks = [
     activities: [
       {
         type: "started",
-        activity: "Project completed!!",
+        activity: "Project kick off!!",
         date: "2025-01-08T18:13:14.717Z",
-        by: { _id: "65c202d4aa62f32ffd1303cc", name: "Santosh" },
+        by: "Santosh",
         _id: "65c51b998064dfd208b3f9",
       },
       {
         type: "commented",
-        activity: "Project completed!!",
+        activity: "Project in progress!!",
         date: "2025-01-08T18:13:14.717Z",
-        by: { _id: "65c202d4aa62f32ffd1303cc", name: "Santosh" },
+        by: "Santosh",
         _id: "65c51b98064df97d208b3f9",
       },
       {
         type: "completed",
         activity: "Project completed!!",
         date: "2025-01-08T18:13:14.717Z",
-        by: { _id: "65c202d4aa62f32ffd1303cc", name: "Santosh" },
+        by: "Santosh",
         _id: "65c51b998064df97d208b3f9",
       },
     ],
     subTasks: [
       {
-        title: "Blog App Admin Dashboard",
+        title: "Design the visuals",
         date: "2025-01-08T00:00:00.000Z",
-        tag: "Website App",
+        tag: "Design",
         _id: "65c3535476ed5c48f9440973",
       },
     ],
