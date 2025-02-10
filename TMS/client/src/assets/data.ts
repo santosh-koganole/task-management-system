@@ -601,6 +601,18 @@ export const tasks: ITask[] = [
         tag: "development",
         _id: "65c5f153b5204a81bde866c8",
       },
+      {
+        title: "Project Proposal Review",
+        date: "2025-01-06T00:00:00.000Z",
+        tag: "Design",
+        _id: "65c352e776ed5c48f944095c",
+      },
+      {
+        title: "White board session",
+        date: "2025-01-07T00:00:00.000Z",
+        tag: "Design",
+        _id: "65c3531476ed5c48f9440965",
+      },
     ],
     createdAt: "2025-01-09T09:32:26.574Z",
     updatedAt: "2025-01-09T09:36:53.339Z",
@@ -736,6 +748,12 @@ export const tasks: ITask[] = [
       },
     ],
     subTasks: [
+      {
+        title: "Do Project setup",
+        date: "2025-01-09T00:00:00.000Z",
+        tag: "development",
+        _id: "65c5f153b5204a81bde866c0",
+      },
       {
         title: "Project Proposal Review",
         date: "2025-01-06T00:00:00.000Z",
