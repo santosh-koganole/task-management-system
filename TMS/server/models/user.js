@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import mongoose, { Schema } from "mongoose";
 
 const userSchema = new Schema(
@@ -9,7 +9,7 @@ const userSchema = new Schema(
     email: { type: String, required: true },
     password: { type: String, required: true, unique: true },
     isAdmin: { type: String, required: true, default: false },
-    tasks: [{ type: Schema.Types, ObjectId, ref: "Task" }],
+    tasks: [{ type: Schema.Types.ObjectId, ref: "Task" }],
     isActive: { type: Boolean, required: true, default: true },
   },
   { timestamps: true }
@@ -23,7 +23,7 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-userSchema.method.matchPassword = async function (enteredPassword) {
+userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 const User = mongoose.model("User", userSchema);
