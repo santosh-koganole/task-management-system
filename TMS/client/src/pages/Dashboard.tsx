@@ -41,6 +41,7 @@ const Dashboard = () => {
     },
   ];
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Card = ({ label, count, bg, icon }: any) => {
     return (
       <div className="w-full h-32 bg-white p-5 shadow-md rounded-md flex items-center justify-between">

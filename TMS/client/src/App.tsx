@@ -28,7 +28,7 @@ function App() {
         <Route path="/log-in" element={<Login />} />
       </Routes>
 
-      <Toaster richColors />
+      <Toaster position="top-right" richColors />
     </main>
   );
 }

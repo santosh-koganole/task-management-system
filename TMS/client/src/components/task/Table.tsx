@@ -1,7 +1,9 @@
 import {
+  MdDelete,
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
+  MdOutlineCreate,
 } from "react-icons/md";
 // import { toast } from "sonner";
 import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate } from "../../utils";
@@ -94,14 +96,12 @@ const Table: React.FC<ITableProps> = ({ tasks }) => {
 
       <td className="py-2 flex gap-2 md:gap-4 justify-end">
         <Button
-          className="text-blue-600 hover:text-blue-500 sm:px-0 text-sm md:text-base"
-          label="Edit"
+          icon={<MdOutlineCreate className="text-xl text-blue-600" />}
           type="button"
         />
 
         <Button
-          className="text-red-700 hover:text-red-500 sm:px-0 text-sm md:text-base"
-          label="Delete"
+          icon={<MdDelete className="text-xl text-red-600" />}
           type="button"
           // onClick={() => deleteClicks(task._id)}
         />
@@ -111,7 +111,7 @@ const Table: React.FC<ITableProps> = ({ tasks }) => {
   return (
     <>
       <div className="bg-white  px-2 md:px-4 pt-4 pb-9 shadow-md rounded">
-        <div className="overflow-visible relative" >
+        <div className="overflow-visible relative">
           <table className="w-full ">
             <TableHeader />
             <tbody>

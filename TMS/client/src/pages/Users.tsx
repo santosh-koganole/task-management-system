@@ -5,11 +5,33 @@ import { summary } from "../assets/data";
 import { getInitials } from "../utils";
 import clsx from "clsx";
 import { IUser } from "../Interfaces";
+import AddUser from "../components/AddUser";
+import ConfirmatioDialog, { UserAction } from "../components/Dailog";
+import { useState } from "react";
+import { MdDelete, MdOutlineCreate } from "react-icons/md";
 
 interface ITableRowProps {
   user: IUser;
 }
 const Users = () => {
+  const [openDialog, setOpenDialog] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [openAction, setOpenAction] = useState(false);
+  const [selected, setSelected] = useState(null);
+
+  const userActionHandler = () => {};
+  const deleteHandler = () => {};
+
+  const deleteClick = (id) => {
+    setSelected(id);
+    setOpenDialog(true);
+  };
+
+  const editClick = (el: IUser) => {
+    setSelected(el);
+    setOpen(true);
+  };
+
   const TableHeader = () => (
     <thead className="border-b border-gray-300">
       <tr className="text-black text-left">
@@ -53,17 +75,13 @@ const Users = () => {
 
       <td className="p-2 flex gap-4 justify-end">
         <Button
-          className="text-blue-600 hover:text-blue-500 font-semibold sm:px-0"
-          label="Edit"
-          type="button"
-          // onClick={() => editClick(user)}
+          icon={<MdOutlineCreate className="text-xl text-blue-600" />}
+          onClick={() => editClick(user)}
         />
 
         <Button
-          className="text-red-700 hover:text-red-500 font-semibold sm:px-0"
-          label="Delete"
-          type="button"
-          // onClick={() => deleteClick(user?._id)}
+          icon={<MdDelete className="text-xl text-red-600" />}
+          onClick={() => deleteClick(user?._id)}
         />
       </td>
     </tr>
@@ -95,6 +113,24 @@ const Users = () => {
           </div>
         </div>
       </div>
+      <AddUser
+        open={open}
+        setOpen={setOpen}
+        userData={selected}
+        key={new Date().getTime().toString()}
+      />
+
+      <ConfirmatioDialog
+        open={openDialog}
+        setOpen={setOpenDialog}
+        onClick={deleteHandler}
+      />
+
+      <UserAction
+        open={openAction}
+        setOpen={setOpenAction}
+        onClick={userActionHandler}
+      />
     </>
   );
 };

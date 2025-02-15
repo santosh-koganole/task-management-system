@@ -3,8 +3,13 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Textbox from "../components/Textbox";
 import Button from "../components/Button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { useLoginMutation } from "../redux/slices/api/authApiSlice";
+import { toast } from "sonner";
+import { setCredentials } from "../redux/slices/authSlice";
+import Loading from "../components/Loader";
+
 function Login() {
   const { user } = useSelector((state: RootState) => state.auth);
   const {
@@ -14,13 +19,31 @@ function Login() {
   } = useForm<{ email: string; password: string }>();
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     user && navigate("/dashboard");
   }, [user]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [login, { isLoading }] = useLoginMutation();
+
   const submitHandler = async (data: unknown) => {
-    console.log(data);
+    try {
+      const result = await login(data);
+      console.log(result);
+
+      dispatch(setCredentials(result.data));
+      navigate("/");
+
+      if ("error" in result) {
+        throw result?.error;
+      }
+    } catch (error: unknown) {
+      const err = error as { data?: { message?: string } };
+      toast.error(err?.data?.message);
+    }
   };
 
   return (
@@ -81,11 +104,15 @@ function Login() {
                 Forget Password?
               </span>
 
-              <Button
-                type="submit"
-                label="Submit"
-                className="w-full h-10 bg-blue-700 text-white rounded-full"
-              />
+              {isLoading ? (
+                <Loading />
+              ) : (
+                <Button
+                  type="submit"
+                  label="Submit"
+                  className="w-full h-10 bg-blue-700 text-white rounded-full"
+                />
+              )}
             </div>
           </form>
         </div>

@@ -28,8 +28,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   const { user } = useSelector((state: RootState) => state.auth);
   const [open, setOpen] = useState(false);
 
-  console.log("task", task);
-  console.log("priority", task?.priority, open);
+  console.log("priority", open);
 
   return (
     <>

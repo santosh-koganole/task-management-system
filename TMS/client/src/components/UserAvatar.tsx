@@ -8,17 +8,33 @@ import {
 import { Fragment, useState } from "react";
 import { FaUser, FaUserLock } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { getInitials } from "../utils";
+import { useLogoutMutation } from "../redux/slices/api/authApiSlice";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { logout } from "../redux/slices/authSlice";
 
 const UserAvatar = () => {
   const [open, setOpen] = useState(false);
   const [openPassword, setOpenPassword] = useState(false);
   const { user } = useSelector((state: RootState) => state.auth);
 
-  const logoutHandler = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [logoutUser] = useLogoutMutation();
+  const logoutHandler = async () => {
     console.log("Logout", open, openPassword);
+    try {
+      await logoutUser;
+      dispatch(logout());
+      navigate("/");
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error: unknown) {
+      toast.error("Something went wrong");
+    }
   };
 
   return (

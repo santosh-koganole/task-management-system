@@ -16,6 +16,7 @@ const authSlice = createSlice({
       localStorage.setItem("userInfo", JSON.stringify(action.payload));
     },
     logout: (state) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       (state.user = null), localStorage.removeItem("userInfo");
     },
     setOpenSidebar: (state, action) => {
