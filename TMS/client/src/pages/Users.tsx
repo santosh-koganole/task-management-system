@@ -1,14 +1,19 @@
 import Title from "../components/Title";
 import Button from "../components/Button";
 import { IoMdAdd } from "react-icons/io";
-import { summary } from "../assets/data";
 import { getInitials } from "../utils";
 import clsx from "clsx";
 import { IUser } from "../Interfaces";
 import AddUser from "../components/AddUser";
 import ConfirmatioDialog, { UserAction } from "../components/Dailog";
-import { useState } from "react";
+import { Key, useState } from "react";
 import { MdDelete, MdOutlineCreate } from "react-icons/md";
+import {
+  useDeleteUserMutation,
+  useGetTeamListQuery,
+  useUserActionMutation,
+} from "../redux/slices/api/userApiSlice";
+import { toast } from "sonner";
 
 interface ITableRowProps {
   user: IUser;
@@ -17,10 +22,46 @@ const Users = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [open, setOpen] = useState(false);
   const [openAction, setOpenAction] = useState(false);
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState<IUser | null>(null);
 
-  const userActionHandler = () => {};
-  const deleteHandler = () => {};
+  const { data, refetch } = useGetTeamListQuery({});
+  const [deleteUser] = useDeleteUserMutation();
+  const [userAction] = useUserActionMutation();
+
+  console.log("team list", data);
+
+  const userActionHandler = async () => {
+    try {
+      const result = await userAction({
+        isActive: !selected?.isActive,
+        id: selected?._id,
+      });
+      refetch();
+      toast.success(result?.data?.message);
+      setSelected(null);
+      setTimeout(() => {
+        setOpenAction(false);
+      }, 500);
+    } catch (error: unknown) {
+      const err = error as { data?: { message?: string } };
+      toast.error(err?.data?.message);
+    }
+  };
+  const deleteHandler = async () => {
+    try {
+      const result = await deleteUser(selected);
+
+      refetch();
+      toast.success(result?.data?.message);
+      setSelected(null);
+      setTimeout(() => {
+        setOpenDialog(false);
+      }, 500);
+    } catch (error: unknown) {
+      const err = error as { data?: { message?: string } };
+      toast.error(err?.data?.message);
+    }
+  };
 
   const deleteClick = (id) => {
     setSelected(id);
@@ -32,6 +73,10 @@ const Users = () => {
     setOpen(true);
   };
 
+  const userStatusClick = (el) => {
+    setSelected(el);
+    setOpenAction(true);
+  };
   const TableHeader = () => (
     <thead className="border-b border-gray-300">
       <tr className="text-black text-left">
@@ -63,13 +108,13 @@ const Users = () => {
 
       <td>
         <button
-          // onClick={() => userStatusClick(user)}
+          onClick={() => userStatusClick(user)}
           className={clsx(
             "w-fit px-4 py-1 rounded-full",
             user?.isActive ? "bg-blue-200" : "bg-yellow-100"
           )}
         >
-          {user?.isActive ? "Active" : "Disabled"}
+          {user?.isActive ? "Active" : "In Active"}
         </button>
       </td>
 
@@ -96,7 +141,10 @@ const Users = () => {
             label="Add New User"
             icon={<IoMdAdd className="text-lg" />}
             className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md 2xl:py-2.5"
-            onClick={() => setOpen(true)}
+            onClick={() => {
+              setSelected(null);
+              setOpen(true);
+            }}
           />
         </div>
 
@@ -105,7 +153,7 @@ const Users = () => {
             <table className="w-full mb-5">
               <TableHeader />
               <tbody>
-                {summary.users?.map((user, index) => (
+                {data?.map((user: IUser, index: Key | null | undefined) => (
                   <TableRow key={index} user={user} />
                 ))}
               </tbody>
@@ -117,6 +165,7 @@ const Users = () => {
         open={open}
         setOpen={setOpen}
         userData={selected}
+        refetch={refetch}
         key={new Date().getTime().toString()}
       />
 

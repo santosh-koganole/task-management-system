@@ -1,44 +1,56 @@
 import { useForm } from "react-hook-form";
-// import { useSelector } from "react-redux";
 import ModalWrapper from "./ModalWrapper";
 import Textbox from "./Textbox";
 import Loading from "./Loader";
 import Button from "./Button";
-// import { RootState } from "../redux/store";
 import { DialogTitle } from "@headlessui/react";
 import { useRegisterMutation } from "../redux/slices/api/authApiSlice";
 import { toast } from "sonner";
 import { IUser } from "../Interfaces";
+import { useUpdateUserMutation } from "../redux/slices/api/userApiSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { setCredentials } from "../redux/slices/authSlice";
 
 type AddUserProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   userData?: any; // Adjust the type based on your actual data structure
+  refetch: () => void;
 };
-const AddUser: React.FC<AddUserProps> = ({ open, setOpen, userData }) => {
+const AddUser: React.FC<AddUserProps> = ({
+  open,
+  setOpen,
+  userData,
+  refetch,
+}) => {
   const defaultValues = userData ?? {};
-  // const { user } = useSelector((state: RootState) => state.auth);
-  const isUpdating = false;
+  const { user } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ defaultValues });
   const [addNewUser, { isLoading }] = useRegisterMutation();
-
+  const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
   const handleOnSubmit = async (data: IUser) => {
     try {
       if (userData) {
-        console.log("USERDATA", userData);
+        const result = await updateUser(data).unwrap();
+        refetch();
+        toast.success(result?.message);
+        if (userData?._id === user._id) {
+          dispatch(setCredentials({ ...result.user }));
+        }
       } else {
-        const result = await addNewUser({
+        await addNewUser({
           ...data,
           password: data.email,
         }).unwrap();
 
-        console.log("result", result);
-
+        refetch();
         toast.success("New user added successfully");
       }
       setTimeout(() => {

@@ -8,6 +8,7 @@ import {
   changeUserPassword,
   activateUserProfile,
   deleteUserProfile,
+  updateUserProfile,
 } from "../controllers/userController.js";
 const router = express.Router();
 
@@ -17,6 +18,7 @@ router.post("/logout", logoutUser);
 
 router.get("/get-team", protectRoute, isAdminRoute, getTeamList);
 
+router.put("/update-user-profile", protectRoute, updateUserProfile);
 router.put("/change-password", protectRoute, changeUserPassword);
 
 // // //   FOR ADMIN ONLY - ADMIN ROUTES
