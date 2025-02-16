@@ -53,3 +53,8 @@ export interface IUser {
   isActive: boolean;
   createdAt: string;
 }
+
+export interface IChartData {
+  name: string;
+  total: number;
+}

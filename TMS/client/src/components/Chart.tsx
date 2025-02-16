@@ -9,9 +9,12 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { chartData } from "../assets/data";
+import { IChartData } from "../Interfaces";
 
-export const Chart = () => {
+interface ChartProps {
+  chartData: IChartData[];
+}
+const Chart: React.FC<ChartProps> = ({ chartData }) => {
   return (
     <ResponsiveContainer width="100%" height={300}>
       <ComposedChart data={chartData}>
@@ -30,3 +33,5 @@ export const Chart = () => {
     </ResponsiveContainer>
   );
 };
+
+export default Chart;

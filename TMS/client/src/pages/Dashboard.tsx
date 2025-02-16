@@ -1,20 +1,30 @@
 import { MdAdminPanelSettings } from "react-icons/md";
-import { summary } from "../assets/data";
 import { FaNewspaper } from "react-icons/fa";
 import { LuClipboardPen } from "react-icons/lu";
 import { FaArrowsToDot } from "react-icons/fa6";
 
 import clsx from "clsx";
-import { Chart } from "../components/Chart";
+import { useGetDashboardStatsQuery } from "../redux/slices/api/taskApiSlice";
+import Loading from "../components/Loader";
+import Chart from "../components/Chart";
 
 const Dashboard = () => {
-  const totals = summary.tasks;
+  const { data, isLoading } = useGetDashboardStatsQuery({});
+
+  if (isLoading) {
+    return (
+      <div className="py-10">
+        <Loading />
+      </div>
+    );
+  }
+  const totals = data.tasks;
 
   const stats = [
     {
       _id: "1",
       label: "TOTAL TASK",
-      total: summary?.totalTasks || 0,
+      total: data?.totalTasks || 0,
       icon: <FaNewspaper />,
       bg: "bg-[#1d4ed8]",
     },
@@ -28,7 +38,7 @@ const Dashboard = () => {
     {
       _id: "3",
       label: "TASK IN PROGRESS ",
-      total: totals["inProgress"] || 0,
+      total: totals["in_Progress"] || 0,
       icon: <LuClipboardPen />,
       bg: "bg-[#f59e0b]",
     },
@@ -74,7 +84,7 @@ const Dashboard = () => {
         <p className="text-xl mb-4 text-gray-600 font-semibold">
           Chart by Priority
         </p>
-        <Chart />
+        <Chart chartData={data?.graphData} />
       </div>
     </div>
   );
