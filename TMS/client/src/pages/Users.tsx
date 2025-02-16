@@ -28,8 +28,6 @@ const Users = () => {
   const [deleteUser] = useDeleteUserMutation();
   const [userAction] = useUserActionMutation();
 
-  console.log("team list", data);
-
   const userActionHandler = async () => {
     try {
       const result = await userAction({
@@ -49,7 +47,7 @@ const Users = () => {
   };
   const deleteHandler = async () => {
     try {
-      const result = await deleteUser(selected);
+      const result = await deleteUser(selected?._id);
 
       refetch();
       toast.success(result?.data?.message);
@@ -63,7 +61,7 @@ const Users = () => {
     }
   };
 
-  const deleteClick = (id) => {
+  const deleteClick = (id: IUser) => {
     setSelected(id);
     setOpenDialog(true);
   };
@@ -73,7 +71,7 @@ const Users = () => {
     setOpen(true);
   };
 
-  const userStatusClick = (el) => {
+  const userStatusClick = (el: IUser) => {
     setSelected(el);
     setOpenAction(true);
   };
@@ -126,7 +124,7 @@ const Users = () => {
 
         <Button
           icon={<MdDelete className="text-xl text-red-600" />}
-          onClick={() => deleteClick(user?._id)}
+          onClick={() => deleteClick(user)}
         />
       </td>
     </tr>

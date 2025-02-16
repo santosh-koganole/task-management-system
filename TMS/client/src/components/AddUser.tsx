@@ -17,7 +17,7 @@ type AddUserProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   userData?: any; // Adjust the type based on your actual data structure
-  refetch: () => void;
+  refetch?: () => void;
 };
 const AddUser: React.FC<AddUserProps> = ({
   open,
@@ -39,8 +39,10 @@ const AddUser: React.FC<AddUserProps> = ({
     try {
       if (userData) {
         const result = await updateUser(data).unwrap();
-        refetch();
-        toast.success(result?.message);
+        if (refetch) {
+          refetch();
+        }
+        toast.success("Profile updated successfully");
         if (userData?._id === user._id) {
           dispatch(setCredentials({ ...result.user }));
         }
@@ -50,7 +52,9 @@ const AddUser: React.FC<AddUserProps> = ({
           password: data.email,
         }).unwrap();
 
-        refetch();
+        if (refetch) {
+          refetch();
+        }
         toast.success("New user added successfully");
       }
       setTimeout(() => {

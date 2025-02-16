@@ -15,6 +15,8 @@ import { useLogoutMutation } from "../redux/slices/api/authApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { logout } from "../redux/slices/authSlice";
+import AddUser from "./AddUser";
+import ChangePassword from "./ChangePassword";
 
 const UserAvatar = () => {
   const [open, setOpen] = useState(false);
@@ -100,6 +102,14 @@ const UserAvatar = () => {
           </div>
         </Menu>
       </div>
+
+      <AddUser
+        open={open}
+        setOpen={setOpen}
+        userData={user}
+        key={new Date().getTime().toString()}
+      />
+      <ChangePassword open={openPassword} setOpen={setOpenPassword} />
     </>
   );
 };

@@ -35,6 +35,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
         credentials: "include",
       }),
     }),
+    changePassword: builder.mutation({
+      query: (data) => ({
+        url: `${USER_URL}/change-password`,
+        method: "PUT",
+        body: data,
+        credentials: "include",
+      }),
+    }),
   }),
 });
 
@@ -43,4 +51,5 @@ export const {
   useGetTeamListQuery,
   useDeleteUserMutation,
   useUserActionMutation,
+  useChangePasswordMutation,
 } = userApiSlice;
