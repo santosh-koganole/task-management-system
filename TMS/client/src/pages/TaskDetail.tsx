@@ -8,16 +8,20 @@ import {
   MdKeyboardDoubleArrowUp,
   MdOutlineDoneAll,
   MdOutlineMessage,
-  MdTaskAlt,
 } from "react-icons/md";
 import { RxActivityLog } from "react-icons/rx";
-import { tasks } from "../assets/data";
 import Tabs from "../components/Tabs";
 import { PRIOTITYSTYELS, TASK_TYPE, getInitials } from "../utils";
 import Loading from "../components/Loader";
 import Button from "../components/Button";
 import moment from "moment";
 import { IActivity, ITask } from "../Interfaces";
+import { useParams } from "react-router-dom";
+import {
+  useGetSingleTaskQuery,
+  usePostTaskActivityMutation,
+} from "../redux/slices/api/taskApiSlice";
+import { toast } from "sonner";
 
 const ICONS = {
   high: <MdKeyboardDoubleArrowUp />,
@@ -79,9 +83,19 @@ const act_types = [
 ];
 
 const TaskDetails = () => {
+  const { id } = useParams();
   const [selected, setSelected] = useState(0);
-  const task: ITask = tasks[2];
 
+  const { data, isLoading, refetch } = useGetSingleTaskQuery(id);
+  const task: ITask = data?.task;
+
+  if (isLoading) {
+    return (
+      <div className="py-10">
+        <Loading />
+      </div>
+    );
+  }
   return (
     <div className="w-full flex flex-col gap-3 mb-4 overflow-y-hidden">
       <h1 className="text-2xl text-gray-600 font-bold">{task?.title}</h1>
@@ -123,38 +137,7 @@ const TaskDetails = () => {
                   {/* <span className="text-gray-400">|</span> */}
 
                   <div className="space-x-2">
-                    <span className="font-semibold">Sub-Task :</span>
-                    <span>{task?.subTasks?.length}</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-between items-center"></div>
-                <div className="space-y-4 py-6">
-                  <p className="text-gray-500 font-semibold text-sm">
-                    SUB-TASKS
-                  </p>
-                  <div className="space-y-8">
-                    {task?.subTasks?.map((el, index) => (
-                      <div key={index} className="flex gap-3">
-                        <div className="w-10 h-10 flex items-center justify-center rounded-full bg-violet-50-200">
-                          <MdTaskAlt className="text-violet-600" size={26} />
-                        </div>
-
-                        <div className="space-y-1">
-                          <div className="flex gap-2 items-center">
-                            <span className="text-sm text-gray-500">
-                              {new Date(el?.date).toDateString()}
-                            </span>
-
-                            <span className="px-2 py-0.5 text-center text-sm rounded-full bg-violet-100 text-violet-700 font-semibold">
-                              {el?.tag}
-                            </span>
-                          </div>
-
-                          <p className="text-gray-700">{el?.title}</p>
-                        </div>
-                      </div>
-                    ))}
+                    <span className="font-semibold">Sub-Task :0</span>
                   </div>
                 </div>
 
@@ -191,7 +174,7 @@ const TaskDetails = () => {
           </>
         ) : (
           <>
-            <Activities activity={task?.activities} />
+            <Activities activity={task?.activities} id={id} refetch={refetch} />
           </>
         )}
       </Tabs>
@@ -201,13 +184,27 @@ const TaskDetails = () => {
 
 interface ActivityProps {
   activity: IActivity[];
+  id?: string;
+  refetch: () => void;
 }
-const Activities = ({ activity }: ActivityProps) => {
+const Activities = ({ activity, id, refetch }: ActivityProps) => {
   const [selected, setSelected] = useState(act_types[0]);
   const [text, setText] = useState("");
-  const isLoading = false;
 
-  const handleSubmit = async () => {};
+  const [postActivity, { isLoading }] = usePostTaskActivityMutation();
+  const handleSubmit = async () => {
+    try {
+      const activityData = { type: selected?.toLowerCase(), activity: text };
+      const res = await postActivity({ data: activityData, id }).unwrap();
+      setText("");
+
+      toast.success(res?.message);
+      refetch();
+    } catch (error: unknown) {
+      const err = error as { data?: { message?: string } };
+      toast.error(err?.data?.message);
+    }
+  };
   interface ICardProps {
     item: IActivity;
   }
@@ -245,7 +242,7 @@ const Activities = ({ activity }: ActivityProps) => {
             <Card
               key={index}
               item={el}
-              // isConnected={index < activity.length - 1}
+              //isConnected={index < activity?.length - 1}
             />
           ))}
         </div>

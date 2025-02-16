@@ -8,11 +8,11 @@ import {
 } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { BsChevronExpand } from "react-icons/bs";
-import { summary } from "../../assets/data"; // Ensure summary has a correct type
 import clsx from "clsx";
 import { getInitials } from "../../utils";
 import { MdCheck } from "react-icons/md";
 import { ITeamMember } from "../../Interfaces";
+import { useGetTeamListQuery } from "../../redux/slices/api/userApiSlice";
 
 interface UserListProps {
   setTeam: React.Dispatch<React.SetStateAction<string[]>>; // team is an array of user IDs
@@ -20,8 +20,7 @@ interface UserListProps {
 }
 
 const UserList: React.FC<UserListProps> = ({ team, setTeam }) => {
-  // Assuming summary?.users is an array of User objects
-  const data: ITeamMember[] = summary?.users || []; // Make sure to type this properly
+  const { data, isLoading } = useGetTeamListQuery({});
   const [selectedUsers, setSelectedUsers] = useState<ITeamMember[]>([]);
 
   const handleChange = (el: ITeamMember[]) => {
@@ -31,14 +30,16 @@ const UserList: React.FC<UserListProps> = ({ team, setTeam }) => {
 
   useEffect(() => {
     if (team.length < 1) {
-      if (data.length > 0) {
+      if (data?.length > 0) {
         setSelectedUsers([data[0]]);
       }
     } else {
-      const selectedTeamUsers = data.filter((user) => team.includes(user._id));
+      const selectedTeamUsers = data.filter((user: { _id: string }) =>
+        team.includes(user._id)
+      );
       setSelectedUsers(selectedTeamUsers);
     }
-  }, [data, team]);
+  }, [isLoading]);
 
   return (
     <div>
@@ -65,13 +66,14 @@ const UserList: React.FC<UserListProps> = ({ team, setTeam }) => {
             leaveTo="opacity-0"
           >
             <ListboxOptions className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-              {data?.map((user, index) => (
+              {data?.map((user: ITeamMember, index: number) => (
                 <ListboxOption
                   key={index}
-                  className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? "bg-amber-100 text-amber-900" : "text-gray-900"
-                    }`
+                  className={({ selected }) =>
+                    clsx(
+                      "relative cursor-default select-none py-2 pl-10 pr-4",
+                      selected ? "bg-amber-100 text-amber-900" : "text-gray-900"
+                    )
                   }
                   value={user}
                 >
@@ -85,7 +87,7 @@ const UserList: React.FC<UserListProps> = ({ team, setTeam }) => {
                       >
                         <div className="w-6 h-6 rounded-full text-white flex items-center justify-center bg-violet-600">
                           <span className="text-center text-[10px]">
-                            {getInitials(user.name)}
+                            {getInitials(user?.name)}
                           </span>
                         </div>
                         <span>{user.name}</span>
