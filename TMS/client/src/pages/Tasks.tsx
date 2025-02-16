@@ -9,9 +9,9 @@ import { IoMdAdd } from "react-icons/io";
 import Tabs from "../components/Tabs";
 import TaskTitle from "../components/TaskTitle";
 import BoardView from "../components/BoardView";
-import { tasks } from "../assets/data";
 import Table from "../components/task/Table";
 import AddTask from "../components/task/AddTask";
+import { useGetAllTaskQuery } from "../redux/slices/api/taskApiSlice";
 
 const TABS = [
   { title: "Board View", icon: <MdGridView /> },
@@ -29,12 +29,16 @@ const Tasks = () => {
 
   const [selected, setSelected] = useState(0);
   const [open, setOpen] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [loading, setLoading] = useState(false);
 
   const status = params?.status || "";
 
-  return loading ? (
+  const { data, isLoading, refetch } = useGetAllTaskQuery({
+    strQuery: status,
+    isTrashed: "",
+    search: "",
+  });
+
+  return isLoading ? (
     <div className="py-10">
       <Loading />
     </div>
@@ -63,15 +67,15 @@ const Tasks = () => {
         )}
 
         {selected !== 1 ? (
-          <BoardView tasks={tasks} />
+          <BoardView tasks={data?.tasks} />
         ) : (
           <div className="w-full">
-            <Table tasks={tasks} />
+            <Table tasks={data?.tasks} />
           </div>
         )}
       </Tabs>
 
-      <AddTask open={open} setOpen={setOpen} />
+      <AddTask open={open} setOpen={setOpen} refetch={refetch} />
     </div>
   );
 };

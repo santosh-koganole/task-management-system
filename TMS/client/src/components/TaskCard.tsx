@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { useState } from "react";
 import {
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
@@ -9,8 +8,6 @@ import { useSelector } from "react-redux";
 import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate } from "../utils";
 import TaskDialog from "./task/TaskDialog";
 import UserInfo from "./UserInfo";
-import { IoMdAdd } from "react-icons/io";
-// import AddSubTask from "./task/AddSubTask";
 import { RootState } from "../redux/store";
 import { ITask } from "../Interfaces";
 
@@ -26,9 +23,6 @@ interface TaskCardProps {
 
 const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   const { user } = useSelector((state: RootState) => state.auth);
-  const [open, setOpen] = useState(false);
-
-  console.log("priority", open);
 
   return (
     <>
@@ -78,43 +72,12 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
           </div>
         </>
 
-        {/* sub tasks */}
-        {task?.subTasks?.length > 0 ? (
-          <div className="py-4 border-t border-gray-200">
-            <h5 className="text-base line-clamp-1 text-black">
-              {task?.subTasks[0].title}
-            </h5>
-
-            <div className="py-4 space-x-8">
-              <span className="text-sm text-gray-600">
-                {formatDate(new Date(task?.subTasks[0]?.date))}
-              </span>
-              <span className="bg-blue-600/10 px-3 py-1 rounded0full text-blue-700 font-medium">
-                {task?.subTasks[0].tag}
-              </span>
-            </div>
+        <>
+          <div className="py-3 border-t border-gray-200">
+            <span className="text-gray-500">No Sub Task</span>
           </div>
-        ) : (
-          <>
-            <div className="py-3 border-t border-gray-200">
-              <span className="text-gray-500">No Sub Task</span>
-            </div>
-          </>
-        )}
-
-        <div className="w-full pb-2">
-          <button
-            onClick={() => setOpen(true)}
-            disabled={user.isAdmin ? false : true}
-            className="w-full flex gap-4 items-center text-sm text-gray-500 font-semibold disabled:cursor-not-allowed disabled::text-gray-300"
-          >
-            <IoMdAdd className="text-lg" />
-            <span>ADD SUBTASK</span>
-          </button>
-        </div>
+        </>
       </div>
-      {/* 
-      <AddSubTask /> */}
     </>
   );
 };

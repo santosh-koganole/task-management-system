@@ -6,27 +6,63 @@ import { useForm } from "react-hook-form";
 import Button from "../Button";
 import UserList from "./UserList";
 import SelectList from "../SelectList";
+import {
+  useCreateTaskMutation,
+  useUpdateTaskMutation,
+} from "../../redux/slices/api/taskApiSlice";
+import { toast } from "sonner";
+import { ITask } from "../../Interfaces";
+import { dateFormatter } from "../../utils";
 
-const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
-const PRIORIRY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
+const LISTS = ["TODO", "IN_PROGRESS", "COMPLETED"];
+const PRIORITY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
 
 interface AddTaskProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  task?: ITask | undefined;
+  refetch?: () => void;
 }
-const AddTask: React.FC<AddTaskProps> = ({ open, setOpen }) => {
-  const task = "";
+const AddTask: React.FC<AddTaskProps> = ({ open, setOpen, task, refetch }) => {
+  const defaultValues = {
+    title: task?.title || "",
+    date: dateFormatter(task?.date || new Date()),
+    team: [],
+    stage: "",
+  };
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues });
   const [team, setTeam] = useState<string[]>([]);
   const [stage, setStage] = useState(LISTS[0]);
-  const [priority, setPriority] = useState(PRIORIRY[2]);
+  const [priority, setPriority] = useState(PRIORITY[2]);
 
-  const submitHandler = () => {};
+  const [createTask] = useCreateTaskMutation();
+  const [updateTask] = useUpdateTaskMutation();
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const submitHandler = async (data: any) => {
+    try {
+      const newData = { ...data, team, stage, priority };
+
+      const res = task?._id
+        ? await updateTask({ ...newData, _id: task._id }).unwrap()
+        : await createTask(newData).unwrap();
+      if (refetch) {
+        refetch();
+      }
+      toast.success(res.message);
+      setTimeout(() => {
+        setOpen(false);
+      }, 500);
+    } catch (error: unknown) {
+      const err = error as { data?: { message?: string } };
+      toast.error(err?.data?.message);
+    }
+  };
 
   return (
     <>
@@ -78,7 +114,7 @@ const AddTask: React.FC<AddTaskProps> = ({ open, setOpen }) => {
             <div className="flex gap-4">
               <SelectList
                 label="Priority Level"
-                lists={PRIORIRY}
+                lists={PRIORITY}
                 selected={priority}
                 setSelected={setPriority}
               />

@@ -38,7 +38,6 @@ export interface ITask {
   team: ITeamMember[];
   isTrashed: boolean;
   activities: IActivity[]; // Define a specific type if you know it
-  subTasks: ISubTask[];
   createdAt: string;
   updatedAt: string;
   __v: number;

@@ -21,7 +21,7 @@ router.get("/", protectRoute, getTasks);
 router.get("/:id", protectRoute, getTask);
 
 router.put("/update/:id", protectRoute, isAdminRoute, updateTask);
-router.put("/:id", protectRoute, isAdminRoute, trashTask);
+router.delete("/:id", protectRoute, isAdminRoute, trashTask);
 
 router.delete(
   "/delete-restore/:id?",

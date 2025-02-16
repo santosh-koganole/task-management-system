@@ -1,9 +1,8 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiTwotoneFolderOpen } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
-import { HiDuplicate } from "react-icons/hi";
-import { MdAdd, MdOutlineEdit } from "react-icons/md";
+import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import {
   Menu,
@@ -14,14 +13,42 @@ import {
 } from "@headlessui/react";
 
 import { ITask } from "../../Interfaces";
+import AddTask from "./AddTask";
+import ConfirmationDialog from "../Dailog";
+import { useTrashTaskMutation } from "../../redux/slices/api/taskApiSlice";
+import { toast } from "sonner";
 
 interface TaskCardProps {
   task: ITask;
 }
 const TaskDialog = ({ task }: TaskCardProps) => {
-  const navigate = useNavigate();
+  const [openEdit, setOpenEdit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
 
-  const deleteClicks = () => {};
+  const navigate = useNavigate();
+  const [deleteTask] = useTrashTaskMutation();
+
+  const deleteClicks = () => {
+    setOpenDialog(true);
+  };
+  const deleteHandler = async () => {
+    try {
+      const res = await deleteTask({
+        id: task._id,
+        isTrashed: "trash",
+      }).unwrap();
+
+      toast.success(res?.message);
+
+      setTimeout(() => {
+        setOpenDialog(false);
+        window.location.reload();
+      }, 500);
+    } catch (error: unknown) {
+      const err = error as { data?: { message?: string } };
+      toast.error(err?.data?.message);
+    }
+  };
 
   const items = [
     {
@@ -32,14 +59,7 @@ const TaskDialog = ({ task }: TaskCardProps) => {
     {
       label: "Edit",
       icon: <MdOutlineEdit className="mr-2 h-5 w-5" aria-hidden="true" />,
-    },
-    {
-      label: "Add Sub-Task",
-      icon: <MdAdd className="mr-2 h-5 w-5" aria-hidden="true" />,
-    },
-    {
-      label: "Duplicate",
-      icon: <HiDuplicate className="mr-2 h-5 w-5" aria-hidden="true" />,
+      onClick: () => setOpenEdit(true),
     },
   ];
 
@@ -92,6 +112,18 @@ const TaskDialog = ({ task }: TaskCardProps) => {
           </Transition>
         </Menu>
       </div>
+      <AddTask
+        open={openEdit}
+        setOpen={setOpenEdit}
+        task={task}
+        key={new Date().getTime()}
+      />
+
+      <ConfirmationDialog
+        open={openDialog}
+        setOpen={setOpenDialog}
+        onClick={deleteHandler}
+      />
     </>
   );
 };
