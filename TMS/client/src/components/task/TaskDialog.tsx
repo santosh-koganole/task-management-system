@@ -46,7 +46,6 @@ const TaskDialog = ({ task }: TaskCardProps) => {
 
       setTimeout(() => {
         setOpenDialog(false);
-        window.location.reload();
       }, 500);
     } catch (error: unknown) {
       const err = error as { data?: { message?: string } };
@@ -86,7 +85,7 @@ const TaskDialog = ({ task }: TaskCardProps) => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <MenuItems className="absolute p-4 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+            <MenuItems className="absolute z-10 p-4 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
               <div className="px-1 py-1 space-y-2">
                 {items.map((el) => (
                   <MenuItem

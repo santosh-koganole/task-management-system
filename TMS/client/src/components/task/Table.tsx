@@ -59,7 +59,6 @@ const Table: React.FC<ITableProps> = ({ tasks }) => {
 
       setTimeout(() => {
         setOpenDialog(false);
-        window.location.reload();
       }, 500);
     } catch (error: unknown) {
       const err = error as { data?: { message?: string } };
