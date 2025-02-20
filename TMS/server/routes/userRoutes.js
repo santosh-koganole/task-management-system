@@ -9,6 +9,9 @@ import {
   activateUserProfile,
   deleteUserProfile,
   updateUserProfile,
+  forgotPassword,
+  validateResetToken,
+  resetPassword,
 } from "../controllers/userController.js";
 const router = express.Router();
 
@@ -21,9 +24,13 @@ router.get("/get-team", protectRoute, getTeamList);
 router.put("/update-user", protectRoute, updateUserProfile);
 router.put("/change-password", protectRoute, changeUserPassword);
 
+router.post("/forgot-password", forgotPassword);
+router.get("/reset-password/:token", validateResetToken);
+router.post("/reset-password/:token", resetPassword);
 // // //   FOR ADMIN ONLY - ADMIN ROUTES
 router
   .route("/:id")
   .put(protectRoute, isAdminRoute, activateUserProfile)
   .delete(protectRoute, isAdminRoute, deleteUserProfile);
+
 export default router;

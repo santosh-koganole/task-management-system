@@ -117,9 +117,12 @@ function Login() {
                 error={errors.password ? errors.password.message : ""}
               />
 
-              {/* <span className="text-sm text-gray-500 hover:text-blue-600 hover:underline cursor-pointer">
+              <span
+                className="text-sm text-gray-500 hover:text-blue-600 hover:underline cursor-pointer"
+                onClick={() => navigate("/forgot-password")}
+              >
                 Forget Password?
-              </span> */}
+              </span>
 
               {isLoading ? (
                 <Loading />
