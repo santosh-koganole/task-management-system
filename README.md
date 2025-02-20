@@ -17,5 +17,6 @@ This is a React-based task management system built with Vite, Tailwind CSS, and 
 - Redux
 - Tailwind CSS
 - Chart.js
-- Material UI
-- Ag-Grid
+- Headless UI
+- Node JS
+- Mongo DB
