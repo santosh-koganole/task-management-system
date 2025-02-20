@@ -16,7 +16,7 @@ import Loading from "../components/Loader";
 import Button from "../components/Button";
 import moment from "moment";
 import { IActivity, ITask } from "../Interfaces";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   useGetSingleTaskQuery,
   usePostTaskActivityMutation,
@@ -87,6 +87,7 @@ const TaskDetails = () => {
   const [selected, setSelected] = useState(0);
 
   const { data, isLoading, refetch } = useGetSingleTaskQuery(id);
+  const navigate = useNavigate();
   const task: ITask = data?.task;
 
   if (isLoading) {
@@ -98,7 +99,15 @@ const TaskDetails = () => {
   }
   return (
     <div className="w-full flex flex-col gap-3 mb-4 overflow-y-hidden">
-      <h1 className="text-2xl text-gray-600 font-bold">{task?.title}</h1>
+      <div className="flex items-center gap-x-4">
+        <h2
+          className="text-sm text-blue-700 font-semibold hover:underline cursor-pointer"
+          onClick={() => navigate("/tasks")}
+        >
+          {"< Back"}
+        </h2>
+        <h1 className="text-2xl text-gray-600 font-bold">{task?.title}</h1>
+      </div>
 
       <Tabs tabs={TABS} setSelected={setSelected}>
         {selected === 0 ? (
@@ -174,7 +183,11 @@ const TaskDetails = () => {
           </>
         ) : (
           <>
-            <Activities activity={task?.activities} id={id} refetch={refetch} />
+            <Activities
+              activity={data?.task?.activities}
+              id={id}
+              refetch={refetch}
+            />
           </>
         )}
       </Tabs>
@@ -221,7 +234,7 @@ const Activities = ({ activity, id, refetch }: ActivityProps) => {
         </div>
 
         <div className="flex flex-col gap-y-1 mb-8">
-          <p className="font-semibold">{item?.by}</p>
+          <p className="font-semibold">{item?.by?.name}</p>
           <div className="text-gray-500 space-y-2">
             <span className="capitalize">{item?.type} : </span>
             <span className="text-sm">{moment(item?.date).fromNow()}</span>
@@ -242,7 +255,7 @@ const Activities = ({ activity, id, refetch }: ActivityProps) => {
             <Card
               key={index}
               item={el}
-              //isConnected={index < activity?.length - 1}
+              // isConnected={index < activity?.length - 1}
             />
           ))}
         </div>

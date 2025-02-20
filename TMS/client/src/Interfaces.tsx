@@ -25,7 +25,7 @@ export interface IActivity {
     | "in_progress";
   activity: string;
   date: string;
-  by: string;
+  by: { _id: string; name: string };
   _id: string;
 }
 
