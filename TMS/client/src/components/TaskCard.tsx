@@ -4,11 +4,9 @@ import {
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
 } from "react-icons/md";
-import { useSelector } from "react-redux";
 import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate } from "../utils";
 import TaskDialog from "./task/TaskDialog";
 import UserInfo from "./UserInfo";
-import { RootState } from "../redux/store";
 import { ITask } from "../Interfaces";
 
 const ICONS = {
@@ -22,8 +20,6 @@ interface TaskCardProps {
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
-  const { user } = useSelector((state: RootState) => state.auth);
-
   return (
     <>
       <div className="relative overflow-visible w-full h-fit bg-white shadow-md p-4 rounded">
@@ -38,7 +34,8 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
             <span className="uppercase">{task?.priority} Priority</span>
           </div>
 
-          {user?.isAdmin && <TaskDialog task={task} />}
+          {/* {user?.isAdmin && <TaskDialog task={task} />} */}
+          <TaskDialog task={task} />
         </div>
 
         <>

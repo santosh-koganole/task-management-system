@@ -111,6 +111,7 @@ const AddUser: React.FC<AddUserProps> = ({
                 required: "Email Address is required!",
               })}
               // error={errors.email ? errors.email.message : ""}
+              isDisabled={false}
               error={errors?.email?.message as string | undefined}
             />
 

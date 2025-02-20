@@ -16,9 +16,9 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);
 
-router.get("/get-team", protectRoute, isAdminRoute, getTeamList);
+router.get("/get-team", protectRoute, getTeamList);
 
-router.put("/update-user-profile", protectRoute, updateUserProfile);
+router.put("/update-user", protectRoute, updateUserProfile);
 router.put("/change-password", protectRoute, changeUserPassword);
 
 // // //   FOR ADMIN ONLY - ADMIN ROUTES

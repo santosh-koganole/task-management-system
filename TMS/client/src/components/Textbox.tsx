@@ -8,10 +8,14 @@ interface ITextboxProps {
   className?: string;
   register?: UseFormRegisterReturn<string>;
   error?: string | undefined;
+  isDisabled?: boolean | undefined;
 }
 
 const Textbox = React.forwardRef<HTMLInputElement, ITextboxProps>(
-  ({ placeholder, type, name, label, className, register, error }, ref) => {
+  (
+    { placeholder, type, name, label, className, register, error, isDisabled },
+    ref
+  ) => {
     return (
       <div className="w-full flex flex-col gap-1">
         {label && (
@@ -27,7 +31,10 @@ const Textbox = React.forwardRef<HTMLInputElement, ITextboxProps>(
           ref={ref}
           {...register}
           aria-invalid={error ? "true" : "false"}
-          className={`bg-transparent px-3 py-2.5 border border-gray-300 placeholder-gray-400 text-gray-900 outline-none text-base focus-ring2 ring-blue-300 ${className}`}
+          disabled={isDisabled}
+          className={`bg-transparent px-3 py-2.5 border border-gray-300 placeholder-gray-400 text-gray-900 outline-none text-base focus-ring2 ring-blue-300 ${className} ${
+            isDisabled ? "bg-gray-200 cursor-not-allowed" : ""
+          }`}
         />
         {error && <span className="text-red-500 text-sm">{error}</span>}
       </div>

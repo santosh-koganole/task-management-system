@@ -24,7 +24,7 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
         as="div"
         className="relative z-10 w-full"
         initialFocus={cancelButtonRef}
-        onClose={() => setOpen(false)}
+        onClose={() => setOpen(true)} // setting setOpen(true) will not close the dialog untill user clicks on Cancel button
       >
         <TransitionChild
           as={Fragment}

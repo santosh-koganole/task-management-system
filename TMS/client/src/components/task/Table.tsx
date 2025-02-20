@@ -10,11 +10,13 @@ import clsx from "clsx";
 import UserInfo from "../UserInfo";
 import Button from "../Button";
 import { ITask, ITeamMember } from "../../Interfaces";
-import ConfirmationDialog from "../Dailog";
+import ConfirmationDialog from "../ConfirmationDialog";
 import { SetStateAction, useState } from "react";
 import { useTrashTaskMutation } from "../../redux/slices/api/taskApiSlice";
 import { toast } from "sonner";
 import AddTask from "./AddTask";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const ICONS = {
   high: <MdKeyboardDoubleArrowUp />,
@@ -28,6 +30,8 @@ interface ITableRowProps {
   task: ITask;
 }
 const Table: React.FC<ITableProps> = ({ tasks }) => {
+  const { user } = useSelector((state: RootState) => state.auth);
+  const { isAdmin } = user; // Destructuring multiple properties
   const [openDialog, setOpenDialog] = useState(false);
   const [selected, setSelected] = useState<ITask | null | string>(null);
   const [openEdit, setOpenEdit] = useState(false);
@@ -121,19 +125,21 @@ const Table: React.FC<ITableProps> = ({ tasks }) => {
         </div>
       </td>
 
-      <td className="py-2 flex gap-2 md:gap-4 justify-end">
-        <Button
-          icon={<MdOutlineCreate className="text-xl text-blue-600" />}
-          type="button"
-          onClick={() => editTaskHandler(task)}
-        />
+      {isAdmin && (
+        <td className="py-2 flex gap-2 md:gap-4 justify-end">
+          <Button
+            icon={<MdOutlineCreate className="text-xl text-blue-600" />}
+            type="button"
+            onClick={() => editTaskHandler(task)}
+          />
 
-        <Button
-          icon={<MdDelete className="text-xl text-red-600" />}
-          type="button"
-          onClick={() => deleteClicks(task._id)}
-        />
-      </td>
+          <Button
+            icon={<MdDelete className="text-xl text-red-600" />}
+            type="button"
+            onClick={() => deleteClicks(task._id)}
+          />
+        </td>
+      )}
     </tr>
   );
   return (

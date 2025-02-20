@@ -10,8 +10,8 @@ interface ConfirmationDialogProps {
   msg?: string | null;
   setMsg?: (msg: string | null) => void;
   onClick?: () => void;
-  type?: "delete" | "restore" | "restoreAll";
-  setType?: (type: "delete" | "restore" | "restoreAll") => void;
+  type?: "delete" | "restore" | "restoreAll" | "deleteAll";
+  setType?: (type: "delete" | "restore" | "restoreAll" | "deleteAll") => void;
 }
 
 export default function ConfirmationDialog({
@@ -24,7 +24,7 @@ export default function ConfirmationDialog({
   setType = () => {},
 }: ConfirmationDialogProps) {
   const closeDialog = () => {
-    setType("delete");
+    setType(type);
     setMsg(null);
     setOpen(false);
   };
@@ -59,7 +59,15 @@ export default function ConfirmationDialog({
                 : "bg-red-600 hover:bg-red-500"
             )}
             onClick={onClick}
-            label={type === "restore" ? "Restore" : "Delete"}
+            label={
+              type === "restore"
+                ? "Restore"
+                : type === "restoreAll"
+                ? "Restore All"
+                : type === "deleteAll"
+                ? "Delete All"
+                : "Delete"
+            }
           />
 
           <Button

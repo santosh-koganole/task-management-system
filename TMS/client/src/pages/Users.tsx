@@ -5,7 +5,9 @@ import { getInitials } from "../utils";
 import clsx from "clsx";
 import { IUser } from "../Interfaces";
 import AddUser from "../components/AddUser";
-import ConfirmatioDialog, { UserAction } from "../components/Dailog";
+import ConfirmatioDialog, {
+  UserAction,
+} from "../components/ConfirmationDialog";
 import { Key, useState } from "react";
 import { MdDelete, MdOutlineCreate } from "react-icons/md";
 import {

@@ -14,14 +14,18 @@ import {
 
 import { ITask } from "../../Interfaces";
 import AddTask from "./AddTask";
-import ConfirmationDialog from "../Dailog";
+import ConfirmationDialog from "../ConfirmationDialog";
 import { useTrashTaskMutation } from "../../redux/slices/api/taskApiSlice";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 interface TaskCardProps {
   task: ITask;
 }
 const TaskDialog = ({ task }: TaskCardProps) => {
+  const { user } = useSelector((state: RootState) => state.auth);
+  const { isAdmin } = user;
   const [openEdit, setOpenEdit] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -55,11 +59,13 @@ const TaskDialog = ({ task }: TaskCardProps) => {
       label: "Open Task",
       icon: <AiTwotoneFolderOpen className="mr-2 h-5 w-5" aria-hidden="true" />,
       onClick: () => navigate(`/task/${task._id}`),
+      isAdmin: true,
     },
     {
       label: "Edit",
       icon: <MdOutlineEdit className="mr-2 h-5 w-5" aria-hidden="true" />,
       onClick: () => setOpenEdit(true),
+      isAdmin: isAdmin,
     },
   ];
 
@@ -86,8 +92,14 @@ const TaskDialog = ({ task }: TaskCardProps) => {
                   <MenuItem
                     as="button"
                     key={el.label}
-                    onClick={el?.onClick}
-                    className="group flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-900 hover:bg-blue-500 hover:text-white"
+                    onClick={el.isAdmin ? el.onClick : undefined}
+                    disabled={!el.isAdmin}
+                    className={`group flex w-full items-center rounded-md px-2 py-2 text-sm 
+                    ${
+                      el.isAdmin
+                        ? "text-gray-900 hover:bg-blue-500 hover:text-white"
+                        : "text-gray-400 cursor-not-allowed opacity-50"
+                    }`}
                   >
                     {el.icon}
                     {el.label}
@@ -98,8 +110,14 @@ const TaskDialog = ({ task }: TaskCardProps) => {
               <div className="px-1 py-1">
                 <MenuItem
                   as="button"
-                  onClick={() => deleteClicks()}
-                  className="group flex w-full items-center rounded-md px-2 py-2 text-sm text-red-900 hover:bg-blue-500 hover:text-white"
+                  onClick={isAdmin ? () => deleteClicks() : undefined}
+                  disabled={!user.isAdmin}
+                  className={`group flex w-full items-center rounded-md px-2 py-2 text-sm 
+                    ${
+                      isAdmin
+                        ? "text-red-900 hover:bg-blue-500 hover:text-white"
+                        : "text-gray-400 cursor-not-allowed opacity-50"
+                    }`}
                 >
                   <RiDeleteBin6Line
                     className="mr-2 h-5 w-5 text-red-400"

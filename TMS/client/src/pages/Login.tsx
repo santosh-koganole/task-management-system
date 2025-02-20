@@ -17,7 +17,11 @@ function Login() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<{ email: string; password: string }>();
+    setValue, // Add setValue to preserve email field
+    setError, // Optionally set an error message for password
+  } = useForm<{ email: string; password: string }>({
+    defaultValues: { email: "", password: "" },
+  });
 
   const navigate = useNavigate();
 
@@ -30,19 +34,26 @@ function Login() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [login, { isLoading }] = useLoginMutation();
 
-  const submitHandler = async (data: unknown) => {
+  const submitHandler = async (data: { email: string; password: string }) => {
     try {
       const result = await login(data);
       console.log(result);
 
-      dispatch(setCredentials(result.data));
-      navigate("/");
-
       if ("error" in result) {
         throw result?.error;
+      } else {
+        dispatch(setCredentials(result.data));
+        navigate("/");
       }
     } catch (error: unknown) {
       const err = error as { data?: { message?: string } };
+
+      setValue("email", data?.email);
+      setValue("password", data?.password);
+      // Optionally show an error message for password
+      setError("password", {
+        message: err?.data?.message,
+      });
       toast.error(err?.data?.message);
     }
   };
