@@ -38,7 +38,7 @@ const AddUser: React.FC<AddUserProps> = ({
     formState: { errors },
   } = useForm({ defaultValues });
   const LISTS_ROLE = ["Admin", "User"];
-  const [role, setRole] = useState(LISTS_ROLE[1]);
+  const [role, setRole] = useState(userData ? userData?.role : LISTS_ROLE[1]);
   const [addNewUser, { isLoading }] = useRegisterMutation();
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
   const handleOnSubmit = async (data: IUser) => {
@@ -131,6 +131,7 @@ const AddUser: React.FC<AddUserProps> = ({
               registerName="role" // Register the field in RHF
               setValue={setValue} // Sync value with form
               trigger={trigger} // Trigger validation
+              isDisabled={userData?._id === user._id}
             />
           </div>
 
