@@ -13,6 +13,8 @@ import {
 import { toast } from "sonner";
 import { ITask } from "../../Interfaces";
 import { dateFormatter } from "../../utils";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const LISTS = ["TODO", "IN_PROGRESS", "COMPLETED"];
 const PRIORITY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
@@ -24,6 +26,7 @@ interface AddTaskProps {
   refetch?: () => void;
 }
 const AddTask: React.FC<AddTaskProps> = ({ open, setOpen, task, refetch }) => {
+  const { user } = useSelector((state: RootState) => state.auth);
   const defaultValues = {
     title: task?.title || "",
     date: dateFormatter(task?.date || new Date()),
@@ -84,6 +87,7 @@ const AddTask: React.FC<AddTaskProps> = ({ open, setOpen, task, refetch }) => {
               className="w-full rounded"
               register={register("title", { required: "Title is required" })}
               error={errors?.title?.message as string | undefined}
+              isDisabled={user?.isAdmin ? false : true}
             />
 
             <UserList setTeam={setTeam} team={team} />

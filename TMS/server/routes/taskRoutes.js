@@ -20,7 +20,7 @@ router.get("/dashboard", protectRoute, dashboardStatistics);
 router.get("/", protectRoute, getTasks);
 router.get("/:id", protectRoute, getTask);
 
-router.put("/update/:id", protectRoute, isAdminRoute, updateTask);
+router.put("/update/:id", protectRoute, updateTask);
 router.delete("/:id", protectRoute, isAdminRoute, trashTask);
 
 router.delete(

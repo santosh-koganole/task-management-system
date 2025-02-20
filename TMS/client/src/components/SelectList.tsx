@@ -6,6 +6,7 @@ import {
   Transition,
 } from "@headlessui/react";
 import { Fragment } from "react";
+import { FieldValues, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import { BsChevronExpand } from "react-icons/bs";
 import { MdCheck } from "react-icons/md";
 
@@ -14,18 +15,30 @@ interface SelectListProps {
   lists: string[]; // Change this if `lists` is an array of objects
   selected: string; // Change this if `selected` is an object
   setSelected: React.Dispatch<React.SetStateAction<string>>; // Change this to the correct type if needed
+  registerName?: string; // Optional for validation
+  setValue?: UseFormSetValue<FieldValues>; // Optional for validation
+  trigger?: UseFormTrigger<FieldValues>; // Optional for validation
 }
 const SelectList: React.FC<SelectListProps> = ({
   lists,
   selected,
   setSelected,
   label,
+  registerName,
+  setValue,
+  trigger,
 }) => {
+  const handleSelect = (value: string) => {
+    setSelected(value);
+    if (setValue && registerName) setValue(registerName, value); // Update RHF form state
+    if (trigger && registerName) trigger(registerName); // Trigger validation
+  };
+
   return (
     <div className="w-full">
       {label && <p className="text-slate-900 dark:text-gray-500">{label}</p>}
 
-      <Listbox value={selected} onChange={setSelected}>
+      <Listbox value={selected} onChange={handleSelect}>
         <div className="relative mt-1">
           <ListboxButton className="relative w-full cursor-default rounded bg-white pl-3 pr-10 text-left px-3 py-2.5 2xl:py-3 border border-gray-300 sm:text-sm">
             <span className="block truncate">{selected}</span>

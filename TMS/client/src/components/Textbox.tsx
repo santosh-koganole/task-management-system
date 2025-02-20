@@ -32,8 +32,8 @@ const Textbox = React.forwardRef<HTMLInputElement, ITextboxProps>(
           {...register}
           aria-invalid={error ? "true" : "false"}
           disabled={isDisabled}
-          className={`bg-transparent px-3 py-2.5 border border-gray-300 placeholder-gray-400 text-gray-900 outline-none text-base focus-ring2 ring-blue-300 ${className} ${
-            isDisabled ? "bg-gray-200 cursor-not-allowed" : ""
+          className={` px-3 py-2.5 border border-gray-300 placeholder-gray-400 text-gray-900 outline-none text-base focus-ring2 ring-blue-300 ${className} ${
+            isDisabled ? "bg-gray-200 cursor-not-allowed" : "bg-transparent"
           }`}
         />
         {error && <span className="text-red-500 text-sm">{error}</span>}

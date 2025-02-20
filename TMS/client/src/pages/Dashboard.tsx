@@ -7,10 +7,14 @@ import clsx from "clsx";
 import { useGetDashboardStatsQuery } from "../redux/slices/api/taskApiSlice";
 import Loading from "../components/Loader";
 import Chart from "../components/Chart";
+import { useEffect } from "react";
 
 const Dashboard = () => {
-  const { data, isLoading } = useGetDashboardStatsQuery({});
-
+  const { data, isLoading, refetch } = useGetDashboardStatsQuery({});
+  useEffect(() => {
+    refetch();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   if (isLoading) {
     return (
       <div className="py-10">
@@ -38,7 +42,7 @@ const Dashboard = () => {
     {
       _id: "3",
       label: "TASK IN PROGRESS ",
-      total: totals["in_Progress"] || 0,
+      total: totals["in_progress"] || 0,
       icon: <LuClipboardPen />,
       bg: "bg-[#f59e0b]",
     },

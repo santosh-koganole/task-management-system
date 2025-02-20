@@ -11,6 +11,8 @@ import { useUpdateUserMutation } from "../redux/slices/api/userApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { setCredentials } from "../redux/slices/authSlice";
+import SelectList from "./SelectList";
+import { useState } from "react";
 
 type AddUserProps = {
   open: boolean;
@@ -31,8 +33,12 @@ const AddUser: React.FC<AddUserProps> = ({
   const {
     register,
     handleSubmit,
+    setValue,
+    trigger,
     formState: { errors },
   } = useForm({ defaultValues });
+  const LISTS_ROLE = ["Admin", "User"];
+  const [role, setRole] = useState(LISTS_ROLE[1]);
   const [addNewUser, { isLoading }] = useRegisterMutation();
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
   const handleOnSubmit = async (data: IUser) => {
@@ -49,7 +55,8 @@ const AddUser: React.FC<AddUserProps> = ({
       } else {
         await addNewUser({
           ...data,
-          password: data.email,
+          password: data?.email,
+          isAdmin: data?.role === "Admin" ? true : false,
         }).unwrap();
 
         if (refetch) {
@@ -61,8 +68,9 @@ const AddUser: React.FC<AddUserProps> = ({
         setOpen(false);
       }, 1500);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error) {
-      toast.error("Something went wrong");
+    } catch (error: unknown) {
+      const err = error as { data?: { message?: string } };
+      toast.error(err?.data?.message);
     }
   };
 
@@ -115,17 +123,14 @@ const AddUser: React.FC<AddUserProps> = ({
               error={errors?.email?.message as string | undefined}
             />
 
-            <Textbox
-              placeholder="Role"
-              type="text"
-              name="role"
+            <SelectList
               label="Role"
-              className="w-full rounded"
-              register={register("role", {
-                required: "User role is required!",
-              })}
-              // error={errors.role ? errors.role.message : ""}
-              error={errors?.role?.message as string | undefined}
+              lists={LISTS_ROLE}
+              selected={role}
+              setSelected={setRole}
+              registerName="role" // Register the field in RHF
+              setValue={setValue} // Sync value with form
+              trigger={trigger} // Trigger validation
             />
           </div>
 

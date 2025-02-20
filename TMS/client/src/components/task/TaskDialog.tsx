@@ -64,7 +64,7 @@ const TaskDialog = ({ task }: TaskCardProps) => {
       label: "Edit",
       icon: <MdOutlineEdit className="mr-2 h-5 w-5" aria-hidden="true" />,
       onClick: () => setOpenEdit(true),
-      isAdmin: isAdmin,
+      isAdmin: true,
     },
   ];
 

@@ -24,8 +24,6 @@ export const registerUser = async (req, res) => {
     });
 
     if (user) {
-      console.log("USER", user);
-
       isAdmin ? createJWT(res, user._id) : null;
       user.password = undefined;
       res.status(201).json(user);

@@ -32,6 +32,10 @@ interface ITableRowProps {
 const Table: React.FC<ITableProps> = ({ tasks }) => {
   const { user } = useSelector((state: RootState) => state.auth);
   const { isAdmin } = user; // Destructuring multiple properties
+  const filteredTasks = tasks.filter((task) =>
+    task.team.some((member) => member._id === user._id)
+  );
+  tasks = isAdmin ? tasks : filteredTasks;
   const [openDialog, setOpenDialog] = useState(false);
   const [selected, setSelected] = useState<ITask | null | string>(null);
   const [openEdit, setOpenEdit] = useState(false);

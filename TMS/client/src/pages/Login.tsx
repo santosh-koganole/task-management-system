@@ -37,7 +37,6 @@ function Login() {
   const submitHandler = async (data: { email: string; password: string }) => {
     try {
       const result = await login(data);
-      console.log(result);
 
       if ("error" in result) {
         throw result?.error;

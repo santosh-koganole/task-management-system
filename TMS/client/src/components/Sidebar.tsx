@@ -61,7 +61,9 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const path = location.pathname.split("/")[1];
 
-  const sidebarLinks = user?.isAdmin ? linkData : linkData.slice(0, 5);
+  const sidebarLinks = user?.isAdmin
+    ? linkData
+    : linkData.filter((item) => !["Team", "Trash"].includes(item.label));
 
   const closeSidebar = () => {
     dispatch(setOpenSidebar(false));

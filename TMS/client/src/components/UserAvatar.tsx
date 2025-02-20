@@ -27,7 +27,6 @@ const UserAvatar = () => {
   const navigate = useNavigate();
   const [logoutUser] = useLogoutMutation();
   const logoutHandler = async () => {
-    console.log("Logout", open, openPassword);
     try {
       await logoutUser;
       dispatch(logout());
