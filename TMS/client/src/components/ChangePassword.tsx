@@ -25,7 +25,19 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ open, setOpen }) => {
 
   const [ChangeUserPassword, { isLoading }] = useChangePasswordMutation();
 
+  const encodePassword = (password: string) => {
+    return btoa(password); // Convert string to Base64
+  };
   const handleOnSubmit: SubmitHandler<FormValues> = async (data) => {
+    const encodedPassworNew = encodePassword(data.password);
+    const encodedPasswordConfirm = encodePassword(data.cpass);
+
+    data = {
+      ...data,
+      password: encodedPassworNew,
+      cpass: encodedPasswordConfirm,
+    };
+
     if (data.password !== data.cpass) {
       toast.warning("Passwords doesn't match");
       return;
