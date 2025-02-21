@@ -2,6 +2,7 @@ import User from "../models/user.js";
 import { createJWT } from "../utils/index.js";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
+import bcrypt from "bcryptjs";
 
 export const registerUser = async (req, res) => {
   try {
@@ -248,12 +249,13 @@ export const forgotPassword = async (req, res) => {
 
     // Send email with nodemailer
     const transporter = nodemailer.createTransport({
-      service: process.env.MAILGUN_HOST,
+      host: process.env.MAILGUN_HOST,
       port: process.env.MAILGUN_PORT,
-      secure: process.env.MAILGUN_PORT == 465,
+      secure: false,
+      // secure: process.env.MAILGUN_PORT == 465,
       auth: {
-        user: process.env.MAILGUN_USER, // Your Gmail email
-        pass: process.env.MAILGUN_PASS, // Your Gmail password or App Password
+        user: process.env.MAILGUN_USER, // Your Mailgun email
+        pass: process.env.MAILGUN_PASS, // Your Mailgun password or App Password
       },
       tls: {
         rejectUnauthorized: false, // Ignore SSL issues (use only in development)
@@ -267,7 +269,7 @@ export const forgotPassword = async (req, res) => {
       }
     });
     const mailOptions = {
-      from: process.env.MAILGUN__USER,
+      from: `Support <no-reply@sandboxe4212d2738d34840b4a5818baff8143a.mailgun.org>`,
       to: user.email,
       subject: "Password Reset Request",
       html: `<p>You requested a password reset. Click <a href="${resetLink}">here</a> to reset your password. This link is valid for 1 hour.</p>`,
@@ -300,11 +302,13 @@ export const resetPassword = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
 
-    // Clear reset token fields
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
-
-    await user.save();
+    await User.updateOne(
+      { _id: user._id },
+      {
+        $unset: { resetPasswordToken: "", resetPasswordExpires: "" },
+        $set: { password: user.password },
+      }
+    );
 
     res.json({ status: true, message: "Password has been reset successfully" });
   } catch (error) {

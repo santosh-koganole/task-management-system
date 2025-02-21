@@ -29,7 +29,7 @@ function App() {
 
         <Route path="/log-in" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
 
       <Toaster position="top-right" richColors />
