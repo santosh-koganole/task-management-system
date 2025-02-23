@@ -120,6 +120,15 @@ export const dashboardStatistics = async (req, res) => {
       }, {})
     ).map(([name, total]) => ({ name, total }));
 
+    const groupStatusData = Object.entries(
+      allTasks.reduce((result, task) => {
+        const { stage } = task;
+
+        result[stage] = (result[stage] || 0) + 1;
+        return result;
+      }, {})
+    ).map(([name, total]) => ({ name, total }));
+
     // calculate total tasks
     const totalTasks = allTasks?.length;
     const last10Task = allTasks?.slice(0, 10);
@@ -130,6 +139,7 @@ export const dashboardStatistics = async (req, res) => {
       users: isAdmin ? users : [],
       tasks: groupTaskks,
       graphData: groupData,
+      pieChartData: groupStatusData,
     };
 
     res.status(200).json({

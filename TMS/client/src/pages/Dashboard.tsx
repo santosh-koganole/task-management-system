@@ -13,7 +13,7 @@ const Dashboard = () => {
   const { data, isLoading, refetch } = useGetDashboardStatsQuery({});
   useEffect(() => {
     refetch();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   if (isLoading) {
     return (
@@ -83,11 +83,22 @@ const Dashboard = () => {
         ))}
       </div>
 
-      <div className="w-full bg-white my-16 p-4 rounded shadow-sm">
-        <p className="text-xl mb-4 text-gray-600 font-semibold">
-          Chart by Priority
-        </p>
-        <Chart chartData={data?.graphData} />
+      <div className="w-full bg-white my-16 p-4 rounded shadow-sm flex flex-row justify-between items-start gap-2">
+        {/* Chart by Priority */}
+        <div className="w-full md:w-1/2">
+          <p className="text-xl mb-4 text-gray-600 font-semibold text-center">
+            Chart by Priority
+          </p>
+          <Chart chartData={data?.graphData} chartType="barLine" />
+        </div>
+
+        {/* Chart by Status */}
+        <div className="w-full md:w-1/2">
+          <p className="text-xl mb-4 text-gray-600 font-semibold text-center">
+            Chart by Status
+          </p>
+          <Chart chartData={data?.pieChartData} chartType="pie" />
+        </div>
       </div>
     </div>
   );
